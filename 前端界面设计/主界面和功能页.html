@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>垃圾邮件分类系统 - 主页面</title>
+    <link rel="stylesheet" href="style1.css">
+
+
+</head>
+<body>
+<header>
+    <div class="nav-left">
+        <h1>垃圾邮件分类系统</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">首页</a></li>
+                <li><a href="#upload" onclick="requireLogin(event)">上传邮件</a></li>
+                <li><a href="#result" onclick="requireLogin(event)">分类结果</a></li>
+                <li><a href="#feedback" onclick="requireLogin(event)">反馈</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="nav-right">
+        <!-- 直接调用弹出登录框 -->
+        <a href="javascript:void(0)" onclick="openLoginModal()">登录</a> | <a href="javascript:void(0)" onclick="openRegisterModal()">注册</a>
+    </div>
+</header>
+
+<main>
+    <section id="home">
+        <h2>欢迎使用垃圾邮件分类系统</h2>
+        <p>本系统通过先进的深度学习技术，对电子邮件进行智能分类。想要使用垃圾邮件检测功能，请先注册或登录。</p>
+    </section>
+
+    <section id="upload" class="hidden-section">
+        <h2>上传或输入邮件</h2>
+        <form id="emailForm">
+            <div class="form-group">
+                <label for="emailFile">上传邮件文件</label>
+                <input type="file" id="emailFile" name="emailFile" accept=".txt,.eml">
+            </div>
+            <div class="form-group">
+                <label for="emailContent">或直接输入邮件内容</label>
+                <textarea id="emailContent" name="emailContent" rows="8" placeholder="请输入邮件文本"></textarea>
+            </div>
+            <button type="button" class="btn">开始检测</button>
+        </form>
+    </section>
+
+    <section id="result" class="hidden-section">
+        <h2>分类结果</h2>
+        <div id="resultDisplay">
+            <p>邮件分类：<span id="classification">待检测</span></p>
+            <table>
+                <tr>
+                    <th>指标</th>
+                    <th>数值</th>
+                </tr>
+                <tr>
+                    <td>准确度</td>
+                    <td id="accuracy">--</td>
+                </tr>
+                <tr>
+                    <td>误判率</td>
+                    <td id="falsePositive">--</td>
+                </tr>
+                <tr>
+                    <td>漏判率</td>
+                    <td id="falseNegative">--</td>
+                </tr>
+            </table>
+        </div>
+    </section>
+
+    <section id="feedback" class="hidden-section">
+        <h2>用户反馈</h2>
+        <form id="feedbackForm">
+            <div class="form-group">
+                <label for="feedback">反馈信息：</label>
+                <textarea id="feedback" name="feedback" rows="5" placeholder="请输入反馈"></textarea>
+            </div>
+            <button type="button" class="btn">提交反馈</button>
+        </form>
+    </section>
+</main>
+
+<!-- 登录弹窗 -->
+<div id="loginModal" class="modal ">
+    <div class="modal-content">
+        <span class="close" onclick="closeLoginModal()">&times;</span>
+        <h2>用户登录</h2>
+        <form onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label for="modalUsername" style="text-align: left">用户名</label>
+                <input type="text" id="modalUsername" name="username" placeholder="请输入用户名" required>
+            </div>
+            <div class="form-group">
+                <label for="modalPassword" style="text-align: left">密码</label>
+                <input type="password" id="modalPassword" name="password" placeholder="请输入密码" required>
+            </div>
+            <button type="submit" class="btn">登录</button>
+        </form>
+        <p style="text-align: left">没有账号？ <a href="javascript:void(0);" onclick="switchToRegister()">立即注册</a>
+        </p>
+
+    </div>
+</div>
+
+<!-- 注册弹窗 -->
+<div id="registerModal" class="modal" >
+    <div class="modal-content">
+        <span class="close" onclick="closeRegisterModal()">&times;</span>
+        <h2>用户注册</h2>
+        <form onsubmit="handleRegister(event)">
+            <div class="form-group">
+                <label for="registerUsername" style="text-align: left">用户名</label>
+                <input type="text" id="registerUsername" name="username" placeholder="请输入用户名" required>
+            </div>
+            <div class="form-group">
+                <label for="registerEmail" style="text-align: left">邮箱</label>
+                <input type="email" id="registerEmail" name="email" placeholder="请输入邮箱" required>
+            </div>
+            <div class="form-group">
+                <label for="registerPassword" style="text-align: left">密码</label>
+                <input type="password" id="registerPassword" name="password" placeholder="请输入密码" required>
+            </div>
+            <button type="submit" class="btn">注册</button>
+        </form>
+        <p style="text-align: left">已有账号？ <a href="javascript:void(0);" onclick="switchToLogin()">立即登录</a></p>
+    </div>
+</div>
+
+
+<script>
+        // 模拟用户未登录状态
+        let isLoggedIn = false; // 实际项目中由后端判断
+
+        // 打开登录弹窗
+        function openLoginModal() {
+            document.getElementById('loginModal').style.display = 'block';
+        }
+
+        // 关闭登录弹窗
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+
+        // 表单提交示例，实际请与后端对接
+        function handleLogin(event) {
+            event.preventDefault();
+            // 这里模拟登录成功，实际应验证账号密码
+            isLoggedIn = true;
+            alert("登录成功！");
+            closeLoginModal();
+        }
+
+        // 检测是否登录，未登录则弹出登录框
+        function requireLogin(event) {
+            if (!isLoggedIn) {
+                event.preventDefault();
+                openLoginModal();
+            }
+        }
+
+        // 打开注册弹窗
+        function openRegisterModal() {
+            document.getElementById('registerModal').style.display = 'block';
+        }
+
+        // 关闭注册弹窗
+        function closeRegisterModal() {
+            document.getElementById('registerModal').style.display = 'none';
+        }
+
+        // 切换到注册弹窗
+        function switchToRegister() {
+            closeLoginModal();
+            openRegisterModal();
+        }
+
+        // 切换到登录弹窗
+        function switchToLogin() {
+            closeRegisterModal();
+            openLoginModal();
+        }
+
+        // 处理注册提交（实际需对接后端）
+        function handleRegister(event) {
+            event.preventDefault();
+            alert("注册成功！");
+            switchToLogin(); // 注册成功后自动跳转到登录
+        }
+
+    </script>
+</body>
+</html>
