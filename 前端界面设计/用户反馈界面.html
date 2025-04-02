@@ -1,10 +1,328 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户反馈 - 垃圾邮件分类系统</title>
+    <link rel="stylesheet" href="style1.css">
+    <style>
+        /* 反馈界面特定样式 */
+        .rating {
+            display: flex;
+            margin-bottom: 15px;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+        }
+        
+        .rating input {
+            display: none;
+        }
+        
+        .rating label {
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            margin-right: 5px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" fill="%23D3D3D3"/></svg>');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+        }
+        
+        .rating input:checked ~ label {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" fill="%23FFD700"/></svg>');
+        }
+        
+        .checkbox-group {
+            margin: 15px 0;
+        }
+        
+        .checkbox-group label {
+            margin-right: 15px;
+            display: inline-block;
+            cursor: pointer;
+        }
+        
+        .feedback-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .success-message {
+            display: none;
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        textarea.form-control {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .btn-submit {
+            background-color: #5563DE;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-submit:hover {
+            background-color: #3f4db5;
+        }
+    </style>
 </head>
 <body>
+    <header>
+        <div class="nav-left">
+            <h1>垃圾邮件分类系统</h1>
+            <nav>
+                <ul>
+                    <li><a href="主界面和功能页.html#home">首页</a></li>
+                    <li><a href="主界面和功能页.html#upload">上传邮件</a></li>
+                    <li><a href="在线分类.html">在线分类</a></li>
+                    <li><a href="主界面和功能页.html#result">分类结果</a></li>
+                    <li><a href="用户反馈界面.html" class="active">反馈</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="nav-right">
+            <a href="javascript:void(0)" id="loginLink">登录</a> | 
+            <a href="javascript:void(0)" id="registerLink">注册</a>
+            <span id="userInfo" style="display:none;">
+                欢迎, <span id="username">用户</span> | 
+                <a href="javascript:void(0)" id="logoutLink">退出</a>
+            </span>
+        </div>
+    </header>
 
+    <main>
+        <section>
+            <h2>用户反馈</h2>
+            <p>您的反馈对我们非常重要，它将帮助我们不断改进垃圾邮件分类系统的性能和用户体验。</p>
+            
+            <div class="feedback-card">
+                <h3>系统评分</h3>
+                <p>请对我们的系统进行整体评分：</p>
+                <div class="form-group">
+                    <div class="rating">
+                        <input type="radio" id="star5" name="rating" value="5">
+                        <label for="star5" title="非常满意"></label>
+                        <input type="radio" id="star4" name="rating" value="4">
+                        <label for="star4" title="满意"></label>
+                        <input type="radio" id="star3" name="rating" value="3">
+                        <label for="star3" title="一般"></label>
+                        <input type="radio" id="star2" name="rating" value="2">
+                        <label for="star2" title="不满意"></label>
+                        <input type="radio" id="star1" name="rating" value="1">
+                        <label for="star1" title="非常不满意"></label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="feedback-card">
+                <h3>功能评价</h3>
+                <p>您对以下功能的满意度如何？</p>
+                
+                <div class="form-group">
+                    <label>垃圾邮件识别准确度：</label>
+                    <select class="form-control" id="accuracyRating">
+                        <option value="">请选择</option>
+                        <option value="很高">很高</option>
+                        <option value="较高">较高</option>
+                        <option value="一般">一般</option>
+                        <option value="较低">较低</option>
+                        <option value="很低">很低</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>用户界面友好度：</label>
+                    <select class="form-control" id="uiRating">
+                        <option value="">请选择</option>
+                        <option value="非常友好">非常友好</option>
+                        <option value="较为友好">较为友好</option>
+                        <option value="一般">一般</option>
+                        <option value="不太友好">不太友好</option>
+                        <option value="非常不友好">非常不友好</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>系统响应速度：</label>
+                    <select class="form-control" id="speedRating">
+                        <option value="">请选择</option>
+                        <option value="非常快">非常快</option>
+                        <option value="较快">较快</option>
+                        <option value="一般">一般</option>
+                        <option value="较慢">较慢</option>
+                        <option value="非常慢">非常慢</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="feedback-card">
+                <h3>需要改进的方面</h3>
+                <p>您认为我们的系统哪些方面需要改进？（可多选）</p>
+                
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" name="improvements" value="识别准确率"> 识别准确率
+                    </label>
+                    <label>
+                        <input type="checkbox" name="improvements" value="用户界面"> 用户界面
+                    </label>
+                    <label>
+                        <input type="checkbox" name="improvements" value="响应速度"> 响应速度
+                    </label>
+                    <label>
+                        <input type="checkbox" name="improvements" value="功能多样性"> 功能多样性
+                    </label>
+                    <label>
+                        <input type="checkbox" name="improvements" value="操作便捷性"> 操作便捷性
+                    </label>
+                </div>
+            </div>
+            
+            <div class="feedback-card">
+                <h3>详细反馈</h3>
+                <div class="form-group">
+                    <label for="feedbackType">反馈类型：</label>
+                    <select class="form-control" id="feedbackType">
+                        <option value="">请选择</option>
+                        <option value="bug报告">Bug报告</option>
+                        <option value="功能建议">功能建议</option>
+                        <option value="使用问题">使用问题</option>
+                        <option value="其他">其他</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="feedbackTitle">标题：</label>
+                    <input type="text" class="form-control" id="feedbackTitle" placeholder="请输入反馈标题">
+                </div>
+                
+                <div class="form-group">
+                    <label for="feedbackContent">详细内容：</label>
+                    <textarea class="form-control" id="feedbackContent" rows="5" placeholder="请详细描述您的反馈内容，如遇到的问题、改进建议等"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contactInfo">联系方式（选填）：</label>
+                    <input type="text" class="form-control" id="contactInfo" placeholder="您的邮箱或电话，方便我们回复">
+                </div>
+                
+                <div class="form-group">
+                    <label for="screenshot">上传截图（选填）：</label>
+                    <input type="file" id="screenshot" accept="image/*">
+                </div>
+            </div>
+            
+            <button type="button" class="btn-submit" id="submitFeedback">提交反馈</button>
+            
+            <div class="success-message" id="successMessage">
+                <p>感谢您的反馈！我们将认真审阅并尽快改进。</p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 模拟用户登录状态
+            let isLoggedIn = false;
+            const loginLink = document.getElementById('loginLink');
+            const registerLink = document.getElementById('registerLink');
+            const userInfo = document.getElementById('userInfo');
+            const usernameSpan = document.getElementById('username');
+            const logoutLink = document.getElementById('logoutLink');
+            const submitButton = document.getElementById('submitFeedback');
+            const successMessage = document.getElementById('successMessage');
+            
+            // 检查登录状态
+            function checkLoginStatus() {
+                // 这里应该从 sessionStorage 或 localStorage 或后端获取登录状态
+                // 这里仅作示例
+                if (localStorage.getItem('isLoggedIn') === 'true') {
+                    isLoggedIn = true;
+                    loginLink.style.display = 'none';
+                    registerLink.style.display = 'none';
+                    userInfo.style.display = 'inline';
+                    usernameSpan.textContent = localStorage.getItem('username') || '用户';
+                } else {
+                    isLoggedIn = false;
+                    loginLink.style.display = 'inline';
+                    registerLink.style.display = 'inline';
+                    userInfo.style.display = 'none';
+                }
+            }
+            
+            // 初始检查登录状态
+            checkLoginStatus();
+            
+            // 登录链接事件
+            loginLink.addEventListener('click', function() {
+                window.location.href = "主界面和功能页.html";
+                // 实际应该触发登录弹窗，这里简化处理
+            });
+            
+            // 注册链接事件
+            registerLink.addEventListener('click', function() {
+                window.location.href = "主界面和功能页.html";
+                // 实际应该触发注册弹窗，这里简化处理
+            });
+            
+            // 登出链接事件
+            logoutLink.addEventListener('click', function() {
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('username');
+                checkLoginStatus();
+                alert("您已成功退出登录！");
+            });
+            
+            // 提交反馈事件
+            submitButton.addEventListener('click', function() {
+                // 在实际应用中，这里应该收集所有表单数据并发送到服务器
+                
+                // 简单的前端验证
+                const feedbackContent = document.getElementById('feedbackContent').value.trim();
+                if (!feedbackContent) {
+                    alert("请填写详细反馈内容！");
+                    return;
+                }
+                
+                // 模拟提交成功
+                successMessage.style.display = 'block';
+                
+                // 滚动到成功消息
+                successMessage.scrollIntoView({ behavior: 'smooth' });
+                
+                // 5秒后隐藏成功消息
+                setTimeout(function() {
+                    successMessage.style.display = 'none';
+                }, 5000);
+                
+                // 清空表单
+                document.querySelectorAll('input[type="text"], textarea').forEach(function(element) {
+                    element.value = '';
+                });
+                document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(function(element) {
+                    element.checked = false;
+                });
+                document.querySelectorAll('select').forEach(function(element) {
+                    element.selectedIndex = 0;
+                });
+            });
+        });
+    </script>
 </body>
 </html>
