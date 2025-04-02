@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>用户反馈 - 垃圾邮件分类系统</title>
+    <title>垃圾邮件分类系统 - 用户反馈</title>
     <link rel="stylesheet" href="style1.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         .feedback-container {
             max-width: 800px;
@@ -136,324 +137,220 @@
 <body>
 <header>
     <div class="nav-left">
-        <h1>垃圾邮件分类系统</h1>
+        <h1><i class="fas fa-shield-alt"></i> 垃圾邮件分类系统</h1>
         <nav>
             <ul>
-                <li><a href="主界面和功能页.html">首页</a></li>
-                <li><a href="邮件上传.html">上传邮件</a></li>
-                <li><a href="在线分类.html">在线分类</a></li>
-                <li><a href="分类结果.html">分类结果</a></li>
-                <li><a href="反馈.html" class="active">反馈</a></li>
+                <li><a href="主界面和功能页.html"><i class="fas fa-home"></i> 首页</a></li>
+                <li><a href="邮件上传.html"><i class="fas fa-upload"></i> 上传邮件</a></li>
+                <li><a href="在线分类.html"><i class="fas fa-tasks"></i> 在线分类</a></li>
+                <li><a href="分类结果.html"><i class="fas fa-chart-bar"></i> 分类结果</a></li>
+                <li><a href="反馈.html" class="active"><i class="fas fa-comments"></i> 反馈</a></li>
             </ul>
         </nav>
+    </div>
+    <div class="nav-right">
+        <a href="javascript:void(0)" onclick="openLoginModal()"><i class="fas fa-sign-in-alt"></i> 登录</a> | 
+        <a href="javascript:void(0)" onclick="openRegisterModal()"><i class="fas fa-user-plus"></i> 注册</a>
     </div>
 </header>
 
 <main>
-    <div class="feedback-container">
-        <div class="feedback-section">
-            <h2>提交反馈</h2>
-            <div class="success-message" id="successMessage">
-                感谢您的反馈！我们会认真处理您的建议。
-            </div>
-            <div class="error-message" id="errorMessage">
-                请填写所有必填字段。
-            </div>
+    <section class="page-header">
+        <h1>用户反馈</h1>
+        <p>您的反馈是我们进步的动力</p>
+    </section>
 
-            <form class="feedback-form" id="feedbackForm" onsubmit="handleSubmit(event)">
-                <div class="form-group">
-                    <label for="feedbackType">反馈类型</label>
-                    <select id="feedbackType" required>
-                        <option value="">请选择反馈类型</option>
-                        <option value="classification">分类结果问题</option>
-                        <option value="interface">界面使用问题</option>
-                        <option value="feature">功能建议</option>
-                        <option value="other">其他</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="rating">系统评分</label>
-                    <div class="rating-group">
-                        <label class="rating-option">
-                            <input type="radio" name="rating" value="1" required> 1星
-                        </label>
-                        <label class="rating-option">
-                            <input type="radio" name="rating" value="2"> 2星
-                        </label>
-                        <label class="rating-option">
-                            <input type="radio" name="rating" value="3"> 3星
-                        </label>
-                        <label class="rating-option">
-                            <input type="radio" name="rating" value="4"> 4星
-                        </label>
-                        <label class="rating-option">
-                            <input type="radio" name="rating" value="5"> 5星
-                        </label>
+    <section class="page-content">
+        <div class="card">
+            <h2><i class="fas fa-comment-dots"></i> 提交反馈</h2>
+            <div class="form-container">
+                <form id="feedbackForm" onsubmit="handleFeedback(event)">
+                    <div class="form-group">
+                        <label for="feedbackType">反馈类型</label>
+                        <select id="feedbackType" name="type" required>
+                            <option value="">请选择反馈类型</option>
+                            <option value="classification">分类结果不准确</option>
+                            <option value="interface">界面使用问题</option>
+                            <option value="feature">功能建议</option>
+                            <option value="other">其他问题</option>
+                        </select>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label for="feedbackContent">反馈内容</label>
-                    <textarea id="feedbackContent" required
-                              placeholder="请详细描述您的问题或建议..."></textarea>
-                </div>
+                    <div class="form-group">
+                        <label for="feedbackTitle">反馈标题</label>
+                        <input type="text" id="feedbackTitle" name="title" placeholder="请输入反馈标题" required>
+                    </div>
 
-                <button type="submit" class="btn btn-primary">提交反馈</button>
-            </form>
+                    <div class="form-group">
+                        <label for="feedbackContent">反馈内容</label>
+                        <textarea id="feedbackContent" name="content" rows="6" placeholder="请详细描述您的问题或建议..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="feedbackEmail">联系邮箱</label>
+                        <input type="email" id="feedbackEmail" name="email" placeholder="请输入您的联系邮箱" required>
+                    </div>
+
+                    <div class="btn-container">
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-paper-plane"></i> 提交反馈
+                        </button>
+                        <button type="reset" class="btn-secondary">
+                            <i class="fas fa-redo"></i> 重置
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
 
-        <div class="feedback-history">
-            <h2>历史反馈</h2>
-            <div class="feedback-item">
-                <div class="feedback-header">
-                    <span>分类结果问题</span>
-                    <span>2024-03-15</span>
+        <div class="card">
+            <h2><i class="fas fa-info-circle"></i> 反馈说明</h2>
+            <div class="instructions">
+                <div class="instruction-item">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>反馈要求</h3>
+                    <p>请提供详细的问题描述，以便我们更好地解决问题</p>
                 </div>
-                <div class="feedback-content">
-                    系统对某些商业邮件的分类不够准确，建议优化分类算法。
+                <div class="instruction-item">
+                    <i class="fas fa-clock"></i>
+                    <h3>响应时间</h3>
+                    <p>我们将在24小时内回复您的反馈</p>
                 </div>
-                <div class="feedback-rating">评分：4星</div>
+                <div class="instruction-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>隐私保护</h3>
+                    <p>您的反馈信息将被严格保密</p>
+                </div>
             </div>
+        </div>
+    </section>
+</main>
 
-            <div class="feedback-item">
-                <div class="feedback-header">
-                    <span>界面使用问题</span>
-                    <span>2024-03-14</span>
-                </div>
-                <div class="feedback-content">
-                    上传大文件时界面响应较慢，建议添加加载提示。
-                </div>
-                <div class="feedback-rating">评分：3星</div>
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>关于我们</h3>
+            <p>我们致力于为用户提供最优质的邮件分类服务，保护您的邮箱安全。</p>
+        </div>
+        <div class="footer-section">
+            <h3>联系方式</h3>
+            <p><i class="fas fa-envelope"></i> Email: support@example.com</p>
+            <p><i class="fas fa-phone"></i> 电话: 400-123-4567</p>
+        </div>
+        <div class="footer-section">
+            <h3>关注我们</h3>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-weixin"></i></a>
+                <a href="#"><i class="fab fa-weibo"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
             </div>
         </div>
     </div>
-</main>
+    <div class="footer-bottom">
+        <p>&copy; 2024 垃圾邮件分类系统. All rights reserved.</p>
+    </div>
+</footer>
+
+<!-- 登录弹窗 -->
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeLoginModal()">&times;</span>
+        <h2>用户登录</h2>
+        <form onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label for="modalUsername">用户名</label>
+                <input type="text" id="modalUsername" name="username" placeholder="请输入用户名" required>
+            </div>
+            <div class="form-group">
+                <label for="modalPassword">密码</label>
+                <input type="password" id="modalPassword" name="password" placeholder="请输入密码" required>
+            </div>
+            <button type="submit" class="btn">登录</button>
+        </form>
+        <p>没有账号？ <a href="javascript:void(0);" onclick="switchToRegister()">立即注册</a></p>
+    </div>
+</div>
+
+<!-- 注册弹窗 -->
+<div id="registerModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeRegisterModal()">&times;</span>
+        <h2>用户注册</h2>
+        <form onsubmit="handleRegister(event)">
+            <div class="form-group">
+                <label for="registerUsername">用户名</label>
+                <input type="text" id="registerUsername" name="username" placeholder="请输入用户名" required>
+            </div>
+            <div class="form-group">
+                <label for="registerEmail">邮箱</label>
+                <input type="email" id="registerEmail" name="email" placeholder="请输入邮箱" required>
+            </div>
+            <div class="form-group">
+                <label for="registerPassword">密码</label>
+                <input type="password" id="registerPassword" name="password" placeholder="请输入密码" required>
+            </div>
+            <button type="submit" class="btn">注册</button>
+        </form>
+        <p>已有账号？ <a href="javascript:void(0);" onclick="switchToLogin()">立即登录</a></p>
+    </div>
+</div>
 
 <script>
-    const API_BASE_URL = 'http://localhost:5000/api';
-    let classificationResults = [];
+    // 登录注册相关函数
+    let isLoggedIn = false;
 
-    // 页面加载时获取URL参数
-    window.onload = async function () {
-        // 获取URL参数
-        const urlParams = new URLSearchParams(window.location.search);
-        const type = urlParams.get('type');
-        const emailIndex = urlParams.get('emailIndex');
+    function openLoginModal() {
+        document.getElementById('loginModal').style.display = 'block';
+    }
 
-        // 如果是从分类结果页面跳转来的
-        if (type === 'classification' && emailIndex !== null) {
-            // 获取分类结果
-            const results = localStorage.getItem('classificationResults');
-            if (results) {
-                classificationResults = JSON.parse(results);
-                const result = classificationResults[parseInt(emailIndex)];
-                if (result) {
-                    // 预填充反馈类型和内容
-                    document.getElementById('feedbackType').value = 'classification';
-                    document.getElementById('feedbackContent').value =
-                            `邮件分类结果反馈：\n分类结果：${result.classification}\n置信度：${(result.confidence * 100).toFixed(1)}%`;
-                }
-            }
-        }
+    function closeLoginModal() {
+        document.getElementById('loginModal').style.display = 'none';
+    }
 
-        // 加载历史反馈
-        await loadFeedbackHistory();
-    };
+    function openRegisterModal() {
+        document.getElementById('registerModal').style.display = 'block';
+    }
 
-    async function handleSubmit(event) {
+    function closeRegisterModal() {
+        document.getElementById('registerModal').style.display = 'none';
+    }
+
+    function switchToRegister() {
+        closeLoginModal();
+        openRegisterModal();
+    }
+
+    function switchToLogin() {
+        closeRegisterModal();
+        openLoginModal();
+    }
+
+    function handleLogin(event) {
         event.preventDefault();
+        isLoggedIn = true;
+        alert("登录成功！");
+        closeLoginModal();
+    }
 
-        const form = event.target;
-        const feedbackType = form.feedbackType.value;
-        const rating = form.querySelector('input[name="rating"]:checked')?.value;
-        const content = form.feedbackContent.value;
+    function handleRegister(event) {
+        event.preventDefault();
+        alert("注册成功！");
+        switchToLogin();
+    }
 
-        if (!feedbackType || !rating || !content) {
-            document.getElementById('errorMessage').style.display = 'block';
-            document.getElementById('successMessage').style.display = 'none';
-            return;
-        }
+    // 处理反馈提交
+    function handleFeedback(event) {
+        event.preventDefault();
+        alert("感谢您的反馈！我们会尽快处理。");
+        event.target.reset();
+    }
 
-        try {
-            const response = await fetch(`${API_BASE_URL}/feedback`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    type: feedbackType,
-                    rating: parseInt(rating),
-                    content: content
-                })
-            });
-
-            const result = await response.json();
-
-            if (result.success) {
-                document.getElementById('successMessage').style.display = 'block';
-                document.getElementById('errorMessage').style.display = 'none';
-                form.reset();
-
-                // 重新加载历史反馈
-                await loadFeedbackHistory();
-
-                // 3秒后隐藏成功消息
-                setTimeout(() => {
-                    document.getElementById('successMessage').style.display = 'none';
-                }, 3000);
-            } else {
-                throw new Error(result.message);
-            }
-        } catch (error) {
-            document.getElementById('errorMessage').textContent = error.message;
-            document.getElementById('errorMessage').style.display = 'block';
-            document.getElementById('successMessage').style.display = 'none';
+    // 点击模态框外部关闭
+    window.onclick = function(event) {
+        if (event.target.className === 'modal') {
+            event.target.style.display = 'none';
         }
     }
-
-    async function loadFeedbackHistory() {
-        try {
-            const response = await fetch(`${API_BASE_URL}/feedback/history`);
-            const result = await response.json();
-
-            if (result.success) {
-                const historyContainer = document.querySelector('.feedback-history');
-                const feedbackItems = result.data.map(item => `
-                        <div class="feedback-item">
-                            <div class="feedback-header">
-                                <span>${item.type}</span>
-                                <span>${item.date}</span>
-                            </div>
-                            <div class="feedback-content">
-                                ${item.content}
-                            </div>
-                            <div class="feedback-rating">评分：${item.rating}星</div>
-                        </div>
-                    `).join('');
-
-                historyContainer.innerHTML = `
-                        <h2>历史反馈</h2>
-                        ${feedbackItems}
-                    `;
-            }
-        } catch (error) {
-            console.error('加载历史反馈失败:', error);
-        }
-    }
-
-    // 从localStorage获取反馈历史
-    function loadFeedbackHistory() {
-        const history = localStorage.getItem('feedbackHistory');
-        if (history) {
-            return JSON.parse(history);
-        }
-        return [];
-    }
-
-    // 保存反馈历史到localStorage
-    function saveFeedbackHistory(history) {
-        localStorage.setItem('feedbackHistory', JSON.stringify(history));
-    }
-
-    // 显示反馈历史
-    function displayFeedbackHistory() {
-        const history = loadFeedbackHistory();
-        const historyContainer = document.getElementById('feedbackHistory');
-
-        if (history.length === 0) {
-            historyContainer.innerHTML = '<p class="no-feedback">暂无反馈记录</p>';
-            return;
-        }
-
-        historyContainer.innerHTML = history.map(feedback => `
-                <div class="feedback-item">
-                    <div class="feedback-header">
-                        <span class="feedback-type ${feedback.type}">${getFeedbackTypeText(feedback.type)}</span>
-                        <span class="feedback-date">${formatDate(feedback.date)}</span>
-                    </div>
-                    <div class="feedback-content">
-                        <div class="feedback-rating">
-                            ${generateStars(feedback.rating)}
-                        </div>
-                        <p class="feedback-text">${feedback.content}</p>
-                    </div>
-                </div>
-            `).join('');
-    }
-
-    // 获取反馈类型文本
-    function getFeedbackTypeText(type) {
-        const types = {
-            'bug': '问题反馈',
-            'feature': '功能建议',
-            'other': '其他'
-        };
-        return types[type] || type;
-    }
-
-    // 生成星级评分
-    function generateStars(rating) {
-        return Array(5).fill('').map((_, index) => `
-                <span class="star ${index < rating}? 'filled' : ''}">★</span>
-            `).join('');
-    }
-
-    // 格式化日期
-    function formatDate(dateString) {
-        const date = new Date(dateString);
-        return date.toLocaleString('zh-CN', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit'
-        });
-    }
-
-    // 处理表单提交
-    document.getElementById('feedbackForm').addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        const type = document.getElementById('feedbackType').value;
-        const rating = parseInt(document.querySelector('input[name="rating"]:checked').value);
-        const content = document.getElementById('feedbackContent').value;
-
-        // 创建新的反馈对象
-        const newFeedback = {
-            type,
-            rating,
-            content,
-            date: new Date().toISOString()
-        };
-
-        // 获取现有历史记录
-        const history = loadFeedbackHistory();
-
-        // 添加新反馈到历史记录
-        history.unshift(newFeedback);
-
-        // 保存更新后的历史记录
-        saveFeedbackHistory(history);
-
-        // 显示成功消息
-        const successMessage = document.getElementById('successMessage');
-        successMessage.style.display = 'block';
-
-        // 重置表单
-        this.reset();
-
-        // 更新显示
-        displayFeedbackHistory();
-
-        // 3秒后隐藏成功消息
-        setTimeout(() => {
-            successMessage.style.display = 'none';
-        }, 3000);
-    });
-
-    // 页面加载时显示反馈历史
-    window.onload = displayFeedbackHistory;
 </script>
 </body>
 </html> 

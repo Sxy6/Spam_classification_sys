@@ -5,64 +5,154 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>垃圾邮件分类系统 - 主页面</title>
     <link rel="stylesheet" href="style1.css">
-
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 <header>
     <div class="nav-left">
-        <h1>垃圾邮件分类系统</h1>
+        <h1><i class="fas fa-shield-alt"></i> 垃圾邮件分类系统</h1>
         <nav>
             <ul>
-                <li><a href="主界面和功能页.html" class="active">首页</a></li>
-                <li><a href="邮件上传.html">上传邮件</a></li>
-                <li><a href="在线分类.html">在线分类</a></li>
-                <li><a href="分类结果.html">分类结果</a></li>
-                <li><a href="反馈.html">反馈</a></li>
+                <li><a href="主界面和功能页.html" class="active"><i class="fas fa-home"></i> 首页</a></li>
+                <li><a href="邮件上传.html"><i class="fas fa-upload"></i> 上传邮件</a></li>
+                <li><a href="在线分类.html"><i class="fas fa-tasks"></i> 在线分类</a></li>
+                <li><a href="分类结果.html"><i class="fas fa-chart-bar"></i> 分类结果</a></li>
+                <li><a href="反馈.html"><i class="fas fa-comments"></i> 反馈</a></li>
             </ul>
         </nav>
     </div>
     <div class="nav-right">
-        <!-- 直接调用弹出登录框 -->
-        <a href="javascript:void(0)" onclick="openLoginModal()">登录</a> | <a href="javascript:void(0)" onclick="openRegisterModal()">注册</a>
+        <a href="javascript:void(0)" onclick="openLoginModal()"><i class="fas fa-sign-in-alt"></i> 登录</a> | 
+        <a href="javascript:void(0)" onclick="openRegisterModal()"><i class="fas fa-user-plus"></i> 注册</a>
     </div>
 </header>
 
 <main>
-    <section id="home">
-        <h2>欢迎使用垃圾邮件分类系统</h2>
-        <p>本系统通过先进的深度学习技术，对电子邮件进行智能分类。想要使用垃圾邮件检测功能，请先注册或登录。</p>
-        <div class="feature-grid">
-            <div class="feature-card">
-                <h3>智能分类</h3>
-                <p>采用先进的机器学习算法，准确识别垃圾邮件</p>
-            </div>
-            <div class="feature-card">
-                <h3>实时检测</h3>
-                <p>快速响应，即时获取分类结果</p>
-            </div>
-            <div class="feature-card">
-                <h3>用户反馈</h3>
-                <p>支持用户反馈，持续优化系统性能</p>
+    <section id="home" class="hero-section">
+        <div class="hero-content">
+            <h2>智能邮件分类，守护您的邮箱安全</h2>
+            <p class="hero-description">基于深度学习的智能垃圾邮件分类系统，为您提供准确、高效的邮件过滤服务</p>
+            <div class="cta-buttons">
+                <a href="javascript:void(0)" onclick="openRegisterModal()" class="btn-primary">立即开始</a>
+                <a href="#features" class="btn-secondary">了解更多</a>
             </div>
         </div>
     </section>
 
-    <section id="upload" class="hidden-section">
-        <h2>上传或输入邮件</h2>
-        <p>请先登录后再使用上传功能</p>
+    <section id="features" class="features-section">
+        <h2>系统特色</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <i class="fas fa-robot"></i>
+                <h3>智能分类</h3>
+                <p>采用先进的深度学习算法，准确识别垃圾邮件，准确率高达99%</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-bolt"></i>
+                <h3>实时检测</h3>
+                <p>毫秒级响应，即时获取分类结果，让您的邮箱更安全</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-comments"></i>
+                <h3>用户反馈</h3>
+                <p>支持用户反馈，持续优化系统性能，提供更好的服务</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-shield-alt"></i>
+                <h3>安全可靠</h3>
+                <p>采用加密传输，保护您的邮件安全，隐私无忧</p>
+            </div>
+        </div>
     </section>
 
-    <section id="result" class="hidden-section">
-        <h2>分类结果</h2>
-        <p>请先登录后再查看分类结果</p>
+    <section id="how-it-works" class="how-it-works-section">
+        <h2>使用流程</h2>
+        <div class="process-steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <i class="fas fa-user-plus"></i>
+                <h3>注册账号</h3>
+                <p>简单注册，开启智能邮件分类之旅</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <i class="fas fa-upload"></i>
+                <h3>上传邮件</h3>
+                <p>支持多种格式邮件上传，操作便捷</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <i class="fas fa-tasks"></i>
+                <h3>智能分类</h3>
+                <p>系统自动分析并分类邮件内容</p>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <i class="fas fa-chart-bar"></i>
+                <h3>查看结果</h3>
+                <p>直观展示分类结果和详细分析</p>
+            </div>
+        </div>
     </section>
 
-    <section id="feedback" class="hidden-section">
-        <h2>用户反馈</h2>
-        <p>请先登录后再提交反馈</p>
+    <section id="stats" class="stats-section">
+        <div class="stats-container">
+            <div class="stat-item">
+                <i class="fas fa-users"></i>
+                <h3>10000+</h3>
+                <p>活跃用户</p>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-envelope"></i>
+                <h3>100万+</h3>
+                <p>处理邮件</p>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-check-circle"></i>
+                <h3>99%</h3>
+                <p>准确率</p>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-clock"></i>
+                <h3>0.1s</h3>
+                <p>平均响应时间</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="cta" class="cta-section">
+        <div class="cta-content">
+            <h2>准备好开始了吗？</h2>
+            <p>加入我们，体验智能邮件分类服务</p>
+            <a href="javascript:void(0)" onclick="openRegisterModal()" class="btn-primary">立即注册</a>
+        </div>
     </section>
 </main>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>关于我们</h3>
+            <p>我们致力于为用户提供最优质的邮件分类服务，保护您的邮箱安全。</p>
+        </div>
+        <div class="footer-section">
+            <h3>联系方式</h3>
+            <p><i class="fas fa-envelope"></i> Email: support@example.com</p>
+            <p><i class="fas fa-phone"></i> 电话: 400-123-4567</p>
+        </div>
+        <div class="footer-section">
+            <h3>关注我们</h3>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-weixin"></i></a>
+                <a href="#"><i class="fab fa-weibo"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 垃圾邮件分类系统. All rights reserved.</p>
+    </div>
+</footer>
 
 <!-- 登录弹窗 -->
 <div id="loginModal" class="modal ">

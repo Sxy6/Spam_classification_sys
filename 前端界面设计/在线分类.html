@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>在线分类 - 垃圾邮件分类系统</title>
+    <title>垃圾邮件分类系统 - 在线分类</title>
     <link rel="stylesheet" href="style1.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         .online-classify-container {
             max-width: 800px;
@@ -195,209 +196,240 @@
 <body>
     <header>
         <div class="nav-left">
-            <h1>垃圾邮件分类系统</h1>
+            <h1><i class="fas fa-shield-alt"></i> 垃圾邮件分类系统</h1>
             <nav>
                 <ul>
-                    <li><a href="主界面和功能页.html">首页</a></li>
-                    <li><a href="邮件上传.html">上传邮件</a></li>
-                    <li><a href="在线分类.html" class="active">在线分类</a></li>
-                    <li><a href="分类结果.html">分类结果</a></li>
-                    <li><a href="反馈.html">反馈</a></li>
+                    <li><a href="主界面和功能页.html"><i class="fas fa-home"></i> 首页</a></li>
+                    <li><a href="邮件上传.html"><i class="fas fa-upload"></i> 上传邮件</a></li>
+                    <li><a href="在线分类.html" class="active"><i class="fas fa-tasks"></i> 在线分类</a></li>
+                    <li><a href="分类结果.html"><i class="fas fa-chart-bar"></i> 分类结果</a></li>
+                    <li><a href="反馈.html"><i class="fas fa-comments"></i> 反馈</a></li>
                 </ul>
             </nav>
+        </div>
+        <div class="nav-right">
+            <a href="javascript:void(0)" onclick="openLoginModal()"><i class="fas fa-sign-in-alt"></i> 登录</a> | 
+            <a href="javascript:void(0)" onclick="openRegisterModal()"><i class="fas fa-user-plus"></i> 注册</a>
         </div>
     </header>
 
     <main>
-        <div class="online-classify-container">
-            <div class="classify-section">
-                <h2>在线邮件分类</h2>
-                <div class="error-message" id="errorMessage"></div>
-                <div class="loading" id="loading">
-                    <div class="loading-spinner"></div>
-                    <p>正在分析邮件内容...</p>
-                </div>
+        <section class="page-header">
+            <h1>在线分类</h1>
+            <p>输入邮件内容，系统将实时进行智能分类</p>
+        </section>
 
-                <div class="input-group">
-                    <label for="emailSubject">邮件主题</label>
-                    <input type="text" id="emailSubject" placeholder="请输入邮件主题">
-                </div>
-
-                <div class="input-group">
-                    <label for="emailContent">邮件内容</label>
-                    <textarea id="emailContent" placeholder="请输入邮件内容"></textarea>
-                </div>
-
-                <div class="action-buttons">
-                    <button class="btn btn-primary" onclick="classifyEmail()">开始分类</button>
-                    <button class="btn btn-secondary" onclick="clearInput()">清除内容</button>
-                </div>
-
-                <div class="result-section" id="resultSection">
-                    <div class="result-header">
-                        <h3>分类结果</h3>
-                        <span class="status" id="classificationStatus"></span>
-                    </div>
-                    <div class="confidence-section">
-                        <h4>置信度</h4>
-                        <div class="confidence-bar">
-                            <div class="confidence-fill" id="confidenceFill"></div>
+        <section class="page-content">
+            <div class="card">
+                <h2><i class="fas fa-envelope"></i> 邮件内容</h2>
+                <div class="form-container">
+                    <form id="classificationForm" onsubmit="handleClassification(event)">
+                        <div class="form-group">
+                            <label for="emailSubject">邮件主题</label>
+                            <input type="text" id="emailSubject" name="subject" placeholder="请输入邮件主题" required>
                         </div>
-                        <span id="confidenceValue"></span>
-                    </div>
-                    <div class="features-section">
-                        <h4>特征分析</h4>
-                        <div class="features-grid">
-                            <div class="feature-group">
-                                <h5>基本特征</h5>
-                                <ul class="features-list" id="basicFeaturesList"></ul>
-                            </div>
-                            <div class="feature-group">
-                                <h5>关键词分析</h5>
-                                <ul class="features-list" id="keywordFeaturesList"></ul>
-                            </div>
+
+                        <div class="form-group">
+                            <label for="emailContent">邮件内容</label>
+                            <textarea id="emailContent" name="content" rows="10" placeholder="请输入邮件内容..." required></textarea>
                         </div>
-                    </div>
-                    <div class="action-buttons">
-                        <button class="btn btn-primary" onclick="downloadReport()">下载报告</button>
-                        <button class="btn btn-secondary" onclick="submitFeedback()">提交反馈</button>
+
+                        <div class="btn-container">
+                            <button type="submit" class="btn-primary">
+                                <i class="fas fa-search"></i> 开始分类
+                            </button>
+                            <button type="reset" class="btn-secondary">
+                                <i class="fas fa-redo"></i> 重置
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2><i class="fas fa-chart-pie"></i> 分类结果</h2>
+                <div id="classificationResult" class="classification-result">
+                    <div class="result-placeholder">
+                        <i class="fas fa-chart-bar"></i>
+                        <p>分类结果将在这里显示</p>
                     </div>
                 </div>
             </div>
-        </div>
+
+            <div class="card">
+                <h2><i class="fas fa-info-circle"></i> 使用说明</h2>
+                <div class="instructions">
+                    <div class="instruction-item">
+                        <i class="fas fa-keyboard"></i>
+                        <h3>输入要求</h3>
+                        <p>请输入完整的邮件主题和内容，以获得更准确的分类结果</p>
+                    </div>
+                    <div class="instruction-item">
+                        <i class="fas fa-bolt"></i>
+                        <h3>实时分类</h3>
+                        <p>系统将实时分析并给出分类结果</p>
+                    </div>
+                    <div class="instruction-item">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>准确率</h3>
+                        <p>基于深度学习模型，分类准确率高达99%</p>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>关于我们</h3>
+                <p>我们致力于为用户提供最优质的邮件分类服务，保护您的邮箱安全。</p>
+            </div>
+            <div class="footer-section">
+                <h3>联系方式</h3>
+                <p><i class="fas fa-envelope"></i> Email: support@example.com</p>
+                <p><i class="fas fa-phone"></i> 电话: 400-123-4567</p>
+            </div>
+            <div class="footer-section">
+                <h3>关注我们</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-weixin"></i></a>
+                    <a href="#"><i class="fab fa-weibo"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 垃圾邮件分类系统. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- 登录弹窗 -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLoginModal()">&times;</span>
+            <h2>用户登录</h2>
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="modalUsername">用户名</label>
+                    <input type="text" id="modalUsername" name="username" placeholder="请输入用户名" required>
+                </div>
+                <div class="form-group">
+                    <label for="modalPassword">密码</label>
+                    <input type="password" id="modalPassword" name="password" placeholder="请输入密码" required>
+                </div>
+                <button type="submit" class="btn">登录</button>
+            </form>
+            <p>没有账号？ <a href="javascript:void(0);" onclick="switchToRegister()">立即注册</a></p>
+        </div>
+    </div>
+
+    <!-- 注册弹窗 -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeRegisterModal()">&times;</span>
+            <h2>用户注册</h2>
+            <form onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label for="registerUsername">用户名</label>
+                    <input type="text" id="registerUsername" name="username" placeholder="请输入用户名" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">邮箱</label>
+                    <input type="email" id="registerEmail" name="email" placeholder="请输入邮箱" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">密码</label>
+                    <input type="password" id="registerPassword" name="password" placeholder="请输入密码" required>
+                </div>
+                <button type="submit" class="btn">注册</button>
+            </form>
+            <p>已有账号？ <a href="javascript:void(0);" onclick="switchToLogin()">立即登录</a></p>
+        </div>
+    </div>
 
     <script>
         const API_BASE_URL = 'http://localhost:5000/api';
 
-        async function classifyEmail() {
-            const subject = document.getElementById('emailSubject').value;
-            const content = document.getElementById('emailContent').value;
+        // 登录注册相关函数
+        let isLoggedIn = false;
 
-            if (!content.trim()) {
-                showError('请输入邮件内容');
-                return;
-            }
-
-            // 显示加载状态
-            document.getElementById('loading').style.display = 'block';
-            document.getElementById('resultSection').classList.remove('show');
-            document.getElementById('errorMessage').style.display = 'none';
-
-            try {
-                const response = await fetch(`${API_BASE_URL}/classify`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        subject: subject,
-                        content: content
-                    })
-                });
-
-                const result = await response.json();
-
-                if (!result.success) {
-                    throw new Error(result.message);
-                }
-
-                // 显示结果
-                displayResult(result.data);
-                document.getElementById('resultSection').classList.add('show');
-            } catch (error) {
-                showError(error.message);
-            } finally {
-                document.getElementById('loading').style.display = 'none';
-            }
+        function openLoginModal() {
+            document.getElementById('loginModal').style.display = 'block';
         }
 
-        function displayResult(data) {
-            // 更新分类状态
-            const statusElement = document.getElementById('classificationStatus');
-            statusElement.textContent = data.classification === 'spam' ? '垃圾邮件' : '正常邮件';
-            statusElement.className = `status status-${data.classification}`;
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
 
-            // 更新置信度
-            const confidenceValue = (data.confidence * 100).toFixed(1);
-            document.getElementById('confidenceValue').textContent = `${confidenceValue}%`;
-            document.getElementById('confidenceFill').style.width = `${confidenceValue}%`;
+        function openRegisterModal() {
+            document.getElementById('registerModal').style.display = 'block';
+        }
 
-            // 更新基本特征列表
-            const basicFeaturesList = document.getElementById('basicFeaturesList');
-            basicFeaturesList.innerHTML = `
-                <li class="feature-item">
-                    <span>URL数量</span>
-                    <span>${data.features.urlCount}</span>
-                </li>
-                <li class="feature-item">
-                    <span>特殊字符比例</span>
-                    <span>${(data.features.specialCharRatio * 100).toFixed(1)}%</span>
-                </li>
-                <li class="feature-item">
-                    <span>词汇多样性</span>
-                    <span>${(data.features.vocabularyDiversity * 100).toFixed(1)}%</span>
-                </li>
+        function closeRegisterModal() {
+            document.getElementById('registerModal').style.display = 'none';
+        }
+
+        function switchToRegister() {
+            closeLoginModal();
+            openRegisterModal();
+        }
+
+        function switchToLogin() {
+            closeRegisterModal();
+            openLoginModal();
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            isLoggedIn = true;
+            alert("登录成功！");
+            closeLoginModal();
+        }
+
+        function handleRegister(event) {
+            event.preventDefault();
+            alert("注册成功！");
+            switchToLogin();
+        }
+
+        // 分类处理函数
+        function handleClassification(event) {
+            event.preventDefault();
+            const subject = document.getElementById('emailSubject').value;
+            const content = document.getElementById('emailContent').value;
+            
+            // 模拟分类过程
+            const resultDiv = document.getElementById('classificationResult');
+            resultDiv.innerHTML = `
+                <div class="result-content">
+                    <div class="result-header">
+                        <h3>分类结果</h3>
+                        <span class="result-badge spam">垃圾邮件</span>
+                    </div>
+                    <div class="result-details">
+                        <div class="detail-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>邮件主题：${subject}</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-chart-pie"></i>
+                            <span>分类概率：98.5%</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-clock"></i>
+                            <span>处理时间：0.2秒</span>
+                        </div>
+                    </div>
+                </div>
             `;
-
-            // 更新关键词特征列表
-            const keywordFeaturesList = document.getElementById('keywordFeaturesList');
-            const importantWords = data.features.importantWords;
-            keywordFeaturesList.innerHTML = Object.entries(importantWords)
-                .map(([word, score]) => `
-                    <li class="keyword-item">
-                        <span>${word}</span>
-                        <span class="keyword-score">${(score * 100).toFixed(1)}%</span>
-                    </li>
-                `)
-                .join('');
         }
 
-        function clearInput() {
-            document.getElementById('emailSubject').value = '';
-            document.getElementById('emailContent').value = '';
-            document.getElementById('resultSection').classList.remove('show');
-            document.getElementById('errorMessage').style.display = 'none';
-        }
-
-        function showError(message) {
-            const errorMessage = document.getElementById('errorMessage');
-            errorMessage.textContent = message;
-            errorMessage.style.display = 'block';
-        }
-
-        function downloadReport() {
-            const subject = document.getElementById('emailSubject').value;
-            const content = document.getElementById('emailContent').value;
-            const statusElement = document.getElementById('classificationStatus');
-            const confidenceValue = document.getElementById('confidenceValue').textContent;
-
-            const report = {
-                timestamp: new Date().toISOString(),
-                subject: subject,
-                content: content,
-                classification: statusElement.textContent,
-                confidence: confidenceValue,
-                features: {
-                    urlCount: document.querySelector('.feature-item:nth-child(1) span:last-child').textContent,
-                    specialCharRatio: document.querySelector('.feature-item:nth-child(2) span:last-child').textContent,
-                    vocabularyDiversity: document.querySelector('.feature-item:nth-child(3) span:last-child').textContent
-                }
-            };
-
-            const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `classification_report_${new Date().getTime()}.json`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        }
-
-        function submitFeedback() {
-            window.location.href = '反馈.html?type=classification';
+        // 点击模态框外部关闭
+        window.onclick = function(event) {
+            if (event.target.className === 'modal') {
+                event.target.style.display = 'none';
+            }
         }
     </script>
 </body>
